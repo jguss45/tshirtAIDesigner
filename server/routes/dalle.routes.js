@@ -16,7 +16,7 @@ router.route('/').get((req, res) => {
     res.status(200).json({ message: "Hello from Dall.E routes" })
 });
 
-router.route('/').post(async(req, res) => {
+router.route('/').post(async (req, res) => {
     try {
         const { prompt } = req.body;
 
