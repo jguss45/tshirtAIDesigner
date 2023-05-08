@@ -3,8 +3,9 @@ This is a web application built using React and Three.js for the frontend and Ex
 
 ## Features
 * Add a custom color to the t-shirt  
-* Upload a file to display any logo you want on the T-Shirt  
-* Generate a logo or texture using the power of Dall-E through AI prompt  
+* Upload a file to display as the logo and/or full design on the T-Shirt  
+* Generate a logo and/or texture using the power of Dall-E through AI prompt  
+* Toggle between showing the logo, texture, or both together
 
 ## Technologies
 React  
