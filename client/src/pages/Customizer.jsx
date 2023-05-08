@@ -52,7 +52,7 @@ const Customizer = () => {
 
     try {
       setGeneratingImg(true);
-      console.log('right before response')
+
       const response = await fetch('http://localhost:8080/api/v1/dalle', {
         method: 'POST',
         headers: {
@@ -62,22 +62,15 @@ const Customizer = () => {
           prompt,
         })
       })
-      console.log("Right after response")
-
-      if (!response.ok) {
-        throw new Error(`HTTP error ${response.status}`);
-      }
       
       const data = await response.json();
-      console.log("Right after response.json")
+
       handleDecals(type, `data:image/png;base64,${data.photo}`)
 
     } catch (error) {
-      console.log("catch statement")
       alert(error)
     } finally {
-      console.log("finally statement")
-
+      console.log("Finally statement")
       setGeneratingImg(false);
       setActiveEditorTab("");
     }
@@ -104,6 +97,7 @@ const Customizer = () => {
       default:
         state.isLogoTexture = true;
         state.isFullTexture = false;
+        break;
     }
 
     //after setting state, activeFilterTab is updated
