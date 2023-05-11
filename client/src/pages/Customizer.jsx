@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
 
-import config from '../config/config';
 import state from '../store';
-import { download } from '../assets';
-import { downloadCanvasToImage, reader } from '../config/helpers';
+import { reader } from '../config/helpers';
 import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
@@ -14,6 +12,7 @@ const Customizer = () => {
   const snap = useSnapshot(state);
 
   const [file, setFile] = useState('');
+    
 
   const [prompt, setPrompt] = useState('');
   const [generatingImg, setGeneratingImg] = useState(false);
@@ -47,6 +46,7 @@ const Customizer = () => {
     }
   }
 
+  //handle ai prompt submission
   const handleSubmit = async (type) => {
     if(!prompt) return alert("Please enter a prompt");
 
@@ -77,15 +77,19 @@ const Customizer = () => {
   }
 
   const handleDecals = (type, result) => {
-    const decalType = DecalTypes[type];
+    const decalType = DecalTypes[type]; // variable to store type of new decal (full or logo)
 
-    state[decalType.stateProperty] = result;
+    state[decalType.stateProperty] = result; // update state object ('logoDecal' or 'fullDecal') key to have value = to new decal
 
+    // if user updates logo decal or texture decal and the corresponding filter tab is 'off': 
+    //    then we will change state object so that the user can see the new decal on the shirt
+    //    + turn 'on' corresponding filter tab 
     if(!activeFilterTab[decalType.filterTab]) {
       handleActiveFilterTab(decalType.filterTab)
     }
   }
 
+  // update state to toggle logo or full texture then update filter tab to reflect which are currently active 
   const handleActiveFilterTab = (tabName) => {
     switch (tabName) {
       case "logoShirt":
@@ -100,8 +104,7 @@ const Customizer = () => {
         break;
     }
 
-    //after setting state, activeFilterTab is updated
-
+    //after setting state, activeFilterTab is toggled
     setActiveFilterTab((prevState) => {
       return {
         ...prevState,
@@ -110,6 +113,7 @@ const Customizer = () => {
     })
   }
 
+  // handle file upload
   const readFile = (type) => {
     reader(file)
       .then((result) => {
@@ -171,7 +175,7 @@ const Customizer = () => {
         </>
       )}
     </AnimatePresence>
-  )
-}
+  );
+};
 
-export default Customizer
+export default Customizer;
