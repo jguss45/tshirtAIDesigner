@@ -1,6 +1,6 @@
 import { proxy } from "valtio";
 
-//state object is used to track the following changes and subsequently trigger re-renders 
+//state object is used to store the following information and subsequently trigger re-renders on a change to any of its keys
 const state = proxy({
     intro: true, //changing from home page to customizer
     color: '#EFBD48', //changing color
